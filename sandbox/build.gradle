@@ -1,0 +1,45 @@
+plugins
+{
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+repositories
+{
+    mavenCentral()
+}
+
+application
+{
+    mainClass = 'AppMain'
+}
+
+java
+{
+    toolchain
+    {
+        languageVersion = JavaLanguageVersion.of(26)
+    }
+}
+
+javafx
+{
+    version = "26"
+    modules = ['javafx.controls']
+}
+
+dependencies
+{
+    annotationProcessor 'org.projectlombok:lombok:1.18.46'    
+    compileOnly 'org.projectlombok:lombok:1.18.46'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.46'
+    testImplementation libs.junit.jupiter
+    testCompileOnly 'org.projectlombok:lombok:1.18.46'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'    
+}
+
+tasks.named('test')
+{
+    useJUnitPlatform()
+}
