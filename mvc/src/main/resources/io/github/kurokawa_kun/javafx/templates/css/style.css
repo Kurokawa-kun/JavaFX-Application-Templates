@@ -1,0 +1,14 @@
+.root 
+{
+    -fx-base: lightgray;
+}
+
+.root:focused
+{
+    -fx-base: lightgray;
+}
+
+.label 
+{
+    -fx-font-size: 24px;
+}
