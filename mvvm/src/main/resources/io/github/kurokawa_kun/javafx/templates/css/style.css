@@ -1,0 +1,174 @@
+.root 
+{
+    -fx-base: rgba(230.000001, 230.000001, 230.000001, 1.0);
+}
+
+.root:focused 
+{
+    -fx-base: rgba(102.000002, 128.000008, 230.000001, 1.0);
+}
+
+.color-picker 
+{
+    -fx-base: transparent;
+}
+
+.label 
+{
+    -fx-font-size: 1em;
+}
+
+.label-splash-app-name 
+{
+    -fx-font-size: 3em;
+}
+
+.label-splash-version 
+{
+    -fx-font-size: 1.5em;
+}
+
+.text 
+{
+    -fx-font-family: 'Roboto';
+}
+
+.menu 
+{
+    -fx-text-fill: #000000;
+}
+
+.menu-item:focused 
+{
+    -fx-background-color: #6680E6;
+}
+
+.menu-item:focused .label 
+{
+    -fx-text-fill: #FFFFFF;
+}
+
+.progress-bar 
+{
+    -fx-background-color: #6680E6;
+}
+
+.progress-indicator 
+{
+    -fx-base: rgba(230.000001, 230.000001, 230.000001, 1.0);
+    -fx-progress-color: #6680E6;
+}
+
+.text-field 
+{
+    -fx-background: #804D80;
+    -fx-prompt-text-fill: #FFFFFF;
+    -fx-text-fill: #FFFFFF;
+}
+
+.text-field:focused 
+{
+    -fx-text-fill: #A1A1A1;
+}
+
+.text-area 
+{
+    -fx-background: #804D80;
+}
+
+.text-area:focused 
+{
+    -fx-base: gray;
+}
+
+.tree-view:focused 
+{
+    -fx-base: rgba(102.000002, 128.000008, 230.000001, 0.1);
+}
+
+
+.tree-cell:even 
+{
+    -fx-text-fill: #000000;
+    -fx-background-color: rgba(230.000001, 230.000001, 230.000001, 1.0);
+}
+
+.tree-cell:hover 
+{
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #A1A1A1;
+}
+
+.tree-cell:selected 
+{
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #A1A1A1;
+}
+
+.table-cell:even 
+{
+    -fx-text-fill: #000000;
+    -fx-background-color: rgba(230.000001, 230.000001, 230.000001, 1.0);
+}
+
+.table-cell:hover 
+{
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #A1A1A1;
+}
+
+.table-cell:selected 
+{
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #A1A1A1;
+}
+
+.tab-pane 
+{
+    -fx-base: rgba(102.000002, 128.000008, 230.000001, 0.6);
+    -fx-background-color: #FFFFFF;
+}
+
+.list-view 
+{
+    -fx-background-color: rgba(102.000002, 128.000008, 230.000001, 0.1);
+}
+
+.list-cell 
+{
+    -fx-text-fill: #000000;
+    -fx-background-color: rgba(102.000002, 128.000008, 230.000001, 1.0);
+}
+
+.list-cell:even 
+{
+    -fx-text-fill: #000000;
+    -fx-background-color: rgba(230.000001, 230.000001, 230.000001, 1.0);
+}
+
+.list-cell:hover 
+{
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #A1A1A1;
+}
+
+.list-cell:selected 
+{
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #A1A1A1;
+}
+
+.button 
+{
+    -fx-text-fill: #000000;
+}
+
+.combo-box .list-cell 
+{
+    -fx-text-fill: #000000;
+}
+
+.tab-label 
+{
+    -fx-text-fill: #000000;
+}

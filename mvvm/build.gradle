@@ -1,0 +1,78 @@
+plugins
+{
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'org.springframework.boot' version '4.0.6' 
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+repositories 
+{
+    mavenCentral()
+}
+
+application 
+{
+    mainClass = 'io.github.kurokawa_kun.javafx.templates.AppMain'
+}
+
+sourceSets
+{
+    main 
+    {
+        resources 
+        {
+            srcDirs = ['src/main/resources']
+        }
+    }
+}
+
+java 
+{
+    toolchain 
+    {
+        languageVersion = JavaLanguageVersion.of(26)
+    }
+}
+
+javafx
+{
+    version = "26"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+dependencies 
+{
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.osgi:org.osgi.resource:1.0.1'
+    implementation 'org.osgi:org.osgi.service.serviceloader:1.0.0'
+    
+    annotationProcessor 'org.projectlombok:lombok:1.18.46'
+    compileOnly 'org.projectlombok:lombok:1.18.46'
+    
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.46'
+    testCompileOnly 'org.projectlombok:lombok:1.18.46'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') 
+{
+    useJUnitPlatform()
+}
+
+bootRun
+{
+    //  bootRunタスクから実行した場合、Spring Bootが独自にクラスパスを構成する。
+    //  さらにApplicationクラスを継承したクラスから起動するとJavaFXがモジュールパスのチェックを厳格に行う。
+    //  その結果、JavaFXがモジュールが不足していると判断して起動に失敗する場合がある。
+    //  そのため、ここで明示的にモジュールの追加を行う。
+    doFirst
+    {
+        jvmArgs = 
+        [
+            '--module-path', classpath.filter { it.name.contains('javafx') }.asPath,
+            // 必要なモジュールがあればここに追加すること
+            '--add-modules', 'javafx.controls,javafx.fxml' 
+        ]
+    }
+}

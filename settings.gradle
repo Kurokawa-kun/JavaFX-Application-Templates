@@ -7,3 +7,4 @@ rootProject.name = 'JavaFX Application Templates'
 include('sandbox')
 include('tool')
 include('mvc')
+include('mvvm')

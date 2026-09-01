@@ -1,0 +1,18 @@
+app:
+  info:
+    name: "APPLICATION NAME"
+    version: "ver 1.0.0"
+    author-name: "AUTHOR NAME"
+    contact-info:
+        - "CONTACT INFO 1"
+        - "CONTACT INFO 2"
+    icon-paths:
+        - "images/icon16.png"
+        - "images/icon32.png"
+        - "images/icon64.png"
+        - "images/icon128.png"
+    logo-path:
+        images/logo.png
+    splash-path:
+        "images/splash.png"
+      
