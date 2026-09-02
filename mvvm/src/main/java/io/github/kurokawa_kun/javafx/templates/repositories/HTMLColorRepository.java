@@ -5,16 +5,16 @@ import javafx.scene.paint.Color;
 /**
  *   HTMLカラー（webカラー）を保持しているリポジトリ
  */
-public interface HTMLColorRepository
+public interface HtmlColorRepository
 {
     /**
      *   HTMLカラーを格納したマップを設定する
      * @param htmlColor HTMLカラー
      */
-    public void setHTMLColor(Map<String, Color> htmlColor);
+    public void setHtmlColor(Map<String, Color> htmlColor);
     /**
      *   HTMLカラーを格納したマップを取得する
      * @return HTMLカラー
      */
-    public Map<String, Color> getHTMLColor();
+    public Map<String, Color> getHtmlColor();
 }

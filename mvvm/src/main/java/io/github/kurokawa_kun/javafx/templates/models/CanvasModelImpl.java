@@ -15,9 +15,9 @@ public class CanvasModelImpl
     private double zoomRatio;
     private final ImageDataRepository imageDataRepository;
     private final MonochromeService monochromeService;
-    private final HTMLColorService htmlColorService;
+    private final HtmlColorService htmlColorService;
     
-    public CanvasModelImpl(ImageDataRepository imageDataRepository, MonochromeService monochromeService, HTMLColorService htmlColorService)
+    public CanvasModelImpl(ImageDataRepository imageDataRepository, MonochromeService monochromeService, HtmlColorService htmlColorService)
     {
         this.imageData = new ImageData(1, 1);
         this.imageDataRepository = imageDataRepository;
@@ -44,7 +44,7 @@ public class CanvasModelImpl
         return newImageData;
     }
     
-    public ImageData callHTMLColorService()
+    public ImageData callHtmlColorService()
     {
         ImageData newImageData = htmlColorService.applyEffect(this.imageData);
         updateImage(newImageData);

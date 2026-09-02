@@ -5,17 +5,17 @@ import javafx.scene.paint.Color;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HTMLColorRepositoryImpl implements HTMLColorRepository
+public class HtmlColorRepositoryImpl implements HtmlColorRepository
 {
     private Map<String, Color> htmlColor = new HashMap<>();
     
     @Override
-    public void setHTMLColor(Map<String, Color> htmlColor)
+    public void setHtmlColor(Map<String, Color> htmlColor)
     {
         this.htmlColor = htmlColor;
     }
     @Override
-    public Map<String, Color> getHTMLColor()
+    public Map<String, Color> getHtmlColor()
     {
         return this.htmlColor;
     }

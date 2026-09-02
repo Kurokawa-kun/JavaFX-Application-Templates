@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class HTMLColorService implements FilterService
+public class HtmlColorService implements FilterService
 {
-    private final HTMLColorRepository htmlColorRepository;
-    private Map<String, Color> mapHTMLColorNames;
+    private final HtmlColorRepository htmlColorRepository;
+    private Map<String, Color> mapHtmlColorNames;
     
     @Override
     public ImageData applyEffect(ImageData imageData)
     {
-        mapHTMLColorNames = htmlColorRepository.getHTMLColor();
+        mapHtmlColorNames = htmlColorRepository.getHtmlColor();
         int imageWidth = imageData.getWidth();
         int imageHeight = imageData.getHeight();
         PixelData[] pixelData = imageData.getPixelData();
@@ -28,7 +28,7 @@ public class HTMLColorService implements FilterService
             for (int x = 0; x < newImage.getWidth(); x++)
             {
                 Color oldColor = imageData.getPixelDataAt(x, y).getColor();
-                Color newColor = getNearlestColor(oldColor, mapHTMLColorNames);
+                Color newColor = getNearlestColor(oldColor, mapHtmlColorNames);
                 newImage.setPixelDataAt(x, y, new PixelData(newColor));
             }
         }

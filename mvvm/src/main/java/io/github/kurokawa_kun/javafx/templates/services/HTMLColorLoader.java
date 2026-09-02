@@ -1,4 +1,5 @@
 package io.github.kurokawa_kun.javafx.templates.services;
+import io.github.kurokawa_kun.javafx.templates.repositories.*;
 import java.util.*;
 import java.io.*;
 import java.text.MessageFormat;
@@ -10,12 +11,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class HTMLColorLoader extends Task<Object> implements Initializer
-{     
+public class HtmlColorLoader extends Task<Object> implements Initializer
+{
     private final String SERVICE_NAME = "HTML Color Service";
     private final int NumberOfColor =147;
-    private Map<String, Color> mapHTMLColorNames;
+    private Map<String, Color> mapHtmlColorNames;    
     private final String CSV_FILE_NAME = "io/github/kurokawa_kun/javafx/templates/csvfiles/HTMLColorNames.csv";
+    private final HtmlColorRepository htmlColorRepository;
     private final ResourceLoader resourceLoader;
     
     @Override
@@ -37,13 +39,14 @@ public class HTMLColorLoader extends Task<Object> implements Initializer
         updateMessage(getInitializationMessage());
         
         //  HTMLカラーパレットが記載されたcsvファイルを取得する
-        mapHTMLColorNames = readCSV(CSV_FILE_NAME);
+        mapHtmlColorNames = readCsv(CSV_FILE_NAME);        
+        htmlColorRepository.setHtmlColor(mapHtmlColorNames);
         
-        return mapHTMLColorNames;
+        return mapHtmlColorNames;
     }
     
     //  指定されたcsvファイルを読み込んでマップ形式にする
-    private Map<String, Color> readCSV(String filename)
+    private Map<String, Color> readCsv(String filename)
     {
         Map<String, Color> data = new HashMap(NumberOfColor);
         

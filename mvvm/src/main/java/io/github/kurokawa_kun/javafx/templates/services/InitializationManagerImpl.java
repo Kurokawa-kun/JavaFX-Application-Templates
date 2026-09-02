@@ -19,7 +19,7 @@ public class InitializationManagerImpl implements InitializationManager
     private Runnable onLoadCompleted;
     
     //  TODO:起動させたいサービスをここに追加
-    private final HTMLColorLoader htmlColorService;
+    private final HtmlColorLoader htmlColorService;
     private final DummyService dummyService;
     
     @Getter 

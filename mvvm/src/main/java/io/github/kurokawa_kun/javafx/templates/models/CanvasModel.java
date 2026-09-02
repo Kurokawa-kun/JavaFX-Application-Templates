@@ -24,8 +24,8 @@ public interface CanvasModel
      */
     public ImageData callMonochromeService();
     /**
-     *   HTMLColorServiceを呼び出す
+     *   HtmlColorServiceを呼び出す
      *   @return 加工された画像
      */
-    public ImageData callHTMLColorService();
+    public ImageData callHtmlColorService();
 }

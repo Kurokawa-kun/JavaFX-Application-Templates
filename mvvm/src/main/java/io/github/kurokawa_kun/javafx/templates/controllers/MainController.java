@@ -43,7 +43,7 @@ public class MainController
     @FXML
     private MenuItem menuItemMonochrome;
     @FXML
-    private MenuItem menuItemHTMLColor;
+    private MenuItem menuItemHtmlColor;
     @FXML
     private ScrollPane scrollPaneCurrentImage;
     @FXML
@@ -132,10 +132,10 @@ public class MainController
     }
     
     @FXML    
-    //  HTMLColorメニューが押されたときの処理
-    private void menuItemHTMLColorOnAction()
+    //  HtmlColorメニューが押されたときの処理
+    private void menuItemHtmlColorOnAction()
     {
-        mainViewModel.callHTMLColorService();
+        mainViewModel.callHtmlColorService();
     }
     
     //  ドラッグ＆ドロップの処理を設定する

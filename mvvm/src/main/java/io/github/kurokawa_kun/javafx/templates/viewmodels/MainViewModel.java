@@ -29,9 +29,9 @@ public class MainViewModel
      *   コンストラクタ
      *   @param canvasModel キャンバスモデル
      *   @param monochromeService MonochromeServiceのインスタンス
-     *   @param htmlColorService HTMLColorServiceのインスタンス
+     *   @param htmlColorService HtmlColorServiceのインスタンス
      */
-    public MainViewModel(CanvasModelImpl canvasModel, MonochromeService monochromeService, HTMLColorLoader htmlColorService)
+    public MainViewModel(CanvasModelImpl canvasModel, MonochromeService monochromeService, HtmlColorLoader htmlColorService)
     {
         this.canvasModel = canvasModel;
         this.sliderValueProperty.addListener((observable, oldValue, newValue) -> 
@@ -91,11 +91,11 @@ public class MainViewModel
     }
     
     /**
-     *   HTMLColorServiceを呼び出す
+     *   HtmlColorServiceを呼び出す
      */
-    public void callHTMLColorService()
+    public void callHtmlColorService()
     {
-        ImageData imageData = this.canvasModel.callHTMLColorService();
+        ImageData imageData = this.canvasModel.callHtmlColorService();
         Image image = ImageTranslator.getImage(imageData);
         this.updateImage(image);
     }
