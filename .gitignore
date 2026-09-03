@@ -1,12 +1,130 @@
-.gradle
-build
-.kotlin
-*.class
-*.log
+#==================================================================================
+#  認証情報・秘密鍵・環境変数
+#  Authentication credentials, secret keys, and environment variables
+#==================================================================================
+*credentials*
+*.pem
+*.key
+*.keystore
+*.jks
+.env
+.env.*
+.env.local
+.env.*.local
+secrets.yml
+
+#==================================================================================
+#  機密データディレクトリ
+#  Confidential data directories
+#==================================================================================
+private/
+secrets/
+docs/internal/
+
+#==================================================================================
+#  アーカイブファイル
+#  Archive files
+#==================================================================================
 *.jar
 *.war
-*.nar
-*.ear
 *.zip
 *.tar.gz
 *.rar
+*.nar
+*.ear
+
+#==================================================================================
+#  バイナリファイル
+#  Binary files
+#==================================================================================
+*.class
+*.o
+*.iso
+
+# Windows
+*.exe
+*.msi
+*.dll
+*.obj
+
+# Linux
+*.so
+
+# Mac OS
+*.dylib
+
+#==================================================================================
+#  Gradleローカル設定
+#  Gradle local settings
+#================================================================================== 
+gradle-app.setting
+gradle-local.properties
+
+#==================================================================================
+#  ログファイル・一時ファイル・ゴミファイル・キャッシュディレクトリ
+#  Log files, temporary files, junk files and cache directories
+#================================================================================== 
+*.log
+logs/
+tmp.*
+*.tmp
+*.bak
+*.swp
+*.swap
+*.swo
+.~lock
+*~
+.gradle/
+.kotlin/
+
+##  Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+## Linux
+.Trash-*
+.directory
+*.tmp
+core
+core.*
+.#*
+
+## Mac OS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Trashes
+
+#==================================================================================
+#  IDE固有の設定ファイル
+#  IDE-specific configuration files
+#================================================================================== 
+## IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+## Eclipse
+.settings/
+.project
+.classpath
+.apt_generated
+.factorypath
+*.launch
+
+## NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+## VS Code
+.vscode/

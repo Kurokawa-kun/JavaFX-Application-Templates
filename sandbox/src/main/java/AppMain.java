@@ -10,6 +10,7 @@ import javafx.geometry.Dimension2D;
 /**
  *   起動時に表示されるウィンドウ
  *   このテンプレートは動作確認やちょっとした実験用です。
+ *   モジュール形式にしていないためjlinkコマンドを使うことはできません。
  *   fxmlを用いて画面を構築する場合はコントローラクラスを別に作成してください。
  */
 public class AppMain extends Application
@@ -41,7 +42,7 @@ public class AppMain extends Application
     @Override
     public void init()
     {
-        //  TODO: ここにアプリの初期化処理を記述。このメソッドはstartメソッドより先に呼び出されJavaFXのスレッドとは別で動作する
+        //  TODO: ここに初期化処理を記述
         
         
     }
@@ -77,7 +78,7 @@ public class AppMain extends Application
         borderPane.setCenter(labelMessage);
         borderPane.setBottom(buttonUpdate);
 
-        //  TODO: ここにアプリの起動処理を追加
+        //  TODO: ここにアプリの起動処理を記述
         
         
         
@@ -92,7 +93,7 @@ public class AppMain extends Application
      */
     public void stop()
     {
-        //  TODO: ここにアプリの終了処理を追加
+        //  TODO: ここにアプリの終了処理を記述
         
         
     }

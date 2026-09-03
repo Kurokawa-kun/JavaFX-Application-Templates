@@ -1,8 +1,9 @@
 plugins
 {
+    id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
-    id 'org.springframework.boot' version '4.0.6' 
+    id 'org.springframework.boot' version '4.1.1' 
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -38,18 +39,14 @@ java
 javafx
 {
     version = "26"
-    modules = [ 'javafx.controls', 'javafx.fxml' ]
+    modules = ['javafx.controls', 'javafx.fxml']
 }
 
 dependencies 
 {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.osgi:org.osgi.resource:1.0.1'
-    implementation 'org.osgi:org.osgi.service.serviceloader:1.0.0'
-    
+    implementation 'org.springframework.boot:spring-boot-starter'    
     annotationProcessor 'org.projectlombok:lombok:1.18.46'
-    compileOnly 'org.projectlombok:lombok:1.18.46'
-    
+    compileOnly 'org.projectlombok:lombok:1.18.46'    
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.46'
     testCompileOnly 'org.projectlombok:lombok:1.18.46'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

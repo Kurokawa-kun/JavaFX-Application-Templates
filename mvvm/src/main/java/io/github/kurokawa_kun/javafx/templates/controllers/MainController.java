@@ -35,7 +35,7 @@ public class MainController
     private final ResourceLoader resourceLoader;
     
     @FXML
-    private BorderPane borderPaneRoot;
+    private BorderPane borderPane;
     @FXML
     private MenuItem menuItemExit;
     @FXML
@@ -60,7 +60,7 @@ public class MainController
     public void initialize()
     {
         //  Sceneが作成されてからタイトルとアイコンを設定する
-        borderPaneRoot.sceneProperty().addListener((observableScene, oldScene, newScene) -> 
+        borderPane.sceneProperty().addListener((observableScene, oldScene, newScene) -> 
         {
             if (newScene != null) 
             {
@@ -74,6 +74,16 @@ public class MainController
                 });
             }        
         });
+        
+        Platform.runLater(() ->
+        {
+            //  「閉じる」ボタンを押したときの処理を追加する
+            Stage stage = (Stage)this.borderPane.getScene().getWindow();
+            stage.setOnCloseRequest(event -> 
+            {
+                close();
+            });
+        });        
         
         //  TODO: fxmlのロードが完了した時点で実行したい処理をここに記述
         setupDragAndDrop();
@@ -97,7 +107,7 @@ public class MainController
         FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter(resourceBundle.getString("misc.file.filetype.image"), "*.png", "*.jpg", "*.jpeg");
         fileChooser.getExtensionFilters().add(extensionFilter);
         
-        File selectedFile = fileChooser.showOpenDialog(borderPaneRoot.getScene().getWindow());
+        File selectedFile = fileChooser.showOpenDialog(borderPane.getScene().getWindow());
         if (selectedFile != null) 
         {
             //  画像データの差し替え
@@ -109,18 +119,28 @@ public class MainController
         }
     }
     
+    //  プログラムを終了する
+    private void close()
+    {
+        Stage stage = (Stage)this.borderPane.getScene().getWindow();
+        //  すべてのウィンドウが閉じられると自動的にPlatform.exit(), Application.stop()が呼ばれる
+        stage.close();
+    }
+    
     @FXML
     //  Closeメニューが押されたときの処理
     private void menuItemExitOnAction()
     {
-        Platform.exit();
+        // ウィンドウの「閉じる」ボタンを押したのと同じイベント（WINDOW_CLOSE_REQUEST）を発生させる        
+        Stage stage = (Stage) borderPane.getScene().getWindow();
+        stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));        
     }
     
     @FXML
     //  Aboutメニューが押されたときの処理
     private void menuItemAboutOnAction() throws IOException
     {
-        Stage stage = (Stage)borderPaneRoot.getScene().getWindow();
+        Stage stage = (Stage)borderPane.getScene().getWindow();
         aboutController.showWindow(stage);
     }
     

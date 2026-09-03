@@ -38,10 +38,10 @@ public class AppMain extends Application
     }
     
     /**
-     *   最初に呼び出される初期化用のメソッド
+     *   初期化処理
      */
     @Override
-    public void init() 
+    public void init()
     {
         //  Spring Bootの起動
         springContext = SpringApplication.run(AppMain.class, getParameters().getRaw().stream().toArray(String[]::new));
@@ -51,6 +51,10 @@ public class AppMain extends Application
         splashViewModel = springContext.getBean(SplashViewModel.class);
         mainController = springContext.getBean(MainController.class);
         loadingCompleted.set(false);
+        
+        //  TODO: ここに初期化処理を記述
+        
+        
     }
 
     /**
@@ -73,7 +77,7 @@ public class AppMain extends Application
             }
         });
         
-        //  TODO:JavaFXアプリケーションが起動する際に実行する処理を記述
+        //  TODO: ここに起動処理を記述
         
         
         
@@ -99,18 +103,16 @@ public class AppMain extends Application
         //  初期化を開始する
         initializationManager.startLoading();
     }
-
+    
     /**
-     *   アプリケーション終了時に呼び出されるメソッド
+     *   終了時に呼び出されるメソッド
      */
-    @Override
-    public void stop() 
+    public void stop()
     {
-        //  TODO:JavaFXアプリケーションが終了する際に実行する処理を記述
+        //  TODO: ここに終了処理を記述
         
         
         springContext.close();
-        Platform.exit();
     }
     
     /**

@@ -41,7 +41,7 @@ public class AppMain extends Application
     @Override
     public void init()
     {
-        //  TODO: ここにアプリの初期化処理を記述。このメソッドはstartメソッドより先に呼び出されJavaFXのスレッドとは別で動作する
+        //  TODO: ここに初期化処理を記述
         
         
     }
@@ -96,7 +96,7 @@ public class AppMain extends Application
         vBoxSub.getChildren().add(buttonClear);
         anchorPane.getChildren().add(vBoxSub);
         
-        //  TODO: ここにアプリの起動処理を追加
+        //  TODO: ここにアプリの起動処理を記述
         
         
         
@@ -111,7 +111,7 @@ public class AppMain extends Application
      */
     public void stop()
     {
-        //  TODO: ここにアプリの終了処理を追加
+        //  TODO: ここにアプリの終了処理を記述
         
         
     }

@@ -1,5 +1,5 @@
 package io.github.kurokawa_kun.javafx.templates.controllers;
-import io.github.kurokawa_kun.javafx.templates.models.MainModel;
+import io.github.kurokawa_kun.javafx.templates.models.MainModelImpl;
 import java.io.File;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -10,10 +10,11 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.fxml.*;
 import javafx.stage.FileChooser;
+import javafx.stage.WindowEvent;
 
 public class MainController
 {
-    private final MainModel mainModel;
+    private final MainModelImpl mainModel;
     
     @FXML
     BorderPane borderPane;
@@ -61,7 +62,7 @@ public class MainController
             Stage stage = (Stage)this.borderPane.getScene().getWindow();
             stage.setOnCloseRequest(event -> 
             {
-                mainModel.close();
+                close();
             });
         });        
     }
@@ -71,7 +72,17 @@ public class MainController
      */
     public MainController()
     {
-        mainModel = new MainModel(this);
+        mainModel = new MainModelImpl(this);
+    }
+    
+    //  プログラムを終了する
+    private void close()
+    {
+        mainModel.close();
+        Stage stage = (Stage)this.borderPane.getScene().getWindow();
+        
+        //  すべてのウィンドウが閉じられると自動的にPlatform.exit(), Application.stop()が呼ばれる
+        stage.close();
     }
     
     /**  
@@ -124,9 +135,9 @@ public class MainController
     @FXML
     public void buttonExitOnAction(ActionEvent actionEvent)
     {
-        mainModel.close();        
-        Stage stage = (Stage)this.borderPane.getScene().getWindow();
-        stage.close();
+        // ウィンドウの「閉じる」ボタンを押したのと同じイベント（WINDOW_CLOSE_REQUEST）を発生させる        
+        Stage stage = (Stage) borderPane.getScene().getWindow();
+        stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));        
     }
     
     /**  
