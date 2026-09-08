@@ -1,6 +1,5 @@
 package io.github.kurokawa_kun.javafx.templates;
 import java.io.IOException;
-import java.net.URL;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.application.*;
@@ -69,7 +68,8 @@ public class AppMain extends Application
     }
     
     /**
-     *   メインメソッド  
+     *   メインメソッド
+     *   @param args
      */
     public static void main(String[] args) 
     {

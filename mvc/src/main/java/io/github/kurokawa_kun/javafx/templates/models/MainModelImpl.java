@@ -1,5 +1,5 @@
 package io.github.kurokawa_kun.javafx.templates.models;
-import io.github.kurokawa_kun.javafx.templates.controllers.*;
+import io.github.kurokawa_kun.javafx.templates.entities.*;
 import io.github.kurokawa_kun.javafx.templates.services.*;
 import io.github.kurokawa_kun.javafx.templates.repositories.*;
 import java.util.*;
@@ -7,65 +7,29 @@ import java.nio.file.Path;
 import javax.sound.midi.*;
 import javafx.application.Platform;
 import javafx.beans.property.*;
-import javafx.geometry.Insets;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.geometry.Insets;
 import lombok.*;
 
 public class MainModelImpl implements MainModel
 {
-    private static final String ICON_PLAY_OFF = "/io/github/kurokawa_kun/javafx/templates/fxml/icons/play_off.png";
-    private static final String ICON_PLAY_ON = "/io/github/kurokawa_kun/javafx/templates/fxml/icons/play_on.png";
-    private static final String ICON_PAUSE_ON = "/io/github/kurokawa_kun/javafx/templates/fxml/icons/pause_on.png";
-    private static final Image IMAGE_PLAY_OFF = new Image(MainModelImpl.class.getResource(ICON_PLAY_OFF).toExternalForm());
-    private static final Image IMAGE_PLAY_ON  = new Image(MainModelImpl.class.getResource(ICON_PLAY_ON).toExternalForm());
-    private static final Image IMAGE_PAUSE_ON = new Image(MainModelImpl.class.getResource(ICON_PAUSE_ON).toExternalForm());
-    
-    private static final byte[] GM_RESET = {(byte)0xF0, (byte)0x7E, (byte)0x7F, (byte)0x09, (byte)0x01, (byte)0xF7};
-    private static final byte[] GM2_RESET = {(byte)0xF0, (byte)0x7E, (byte)0x7F, (byte)0x09, (byte)0x03, (byte)0xF7};
-    private static final byte[] GS_RESET = {(byte)0xF0, (byte)0x41, (byte)0x10, (byte)0x42, (byte)0x12, (byte)0x40, (byte)0x00, (byte)0x7F, (byte)0x00, (byte)0x41, (byte)0xF7};
-    private static final byte[] GS_SYSTEM_MODE1_SET = {(byte)0xF0, (byte)0x41, (byte)0x10, (byte)0x42, (byte)0x12, (byte)0x00, (byte)0x00, (byte)0x7F, (byte)0x00, (byte)0x01, (byte)0xF7};
-    private static final byte[] GS_SYSTEM_MODE2_SET = {(byte)0xF0, (byte)0x41, (byte)0x10, (byte)0x42, (byte)0x12, (byte)0x00, (byte)0x00, (byte)0x7F, (byte)0x01, (byte)0x00, (byte)0xF7};
-    private static final byte[] XG_SYSTEM_ON = {(byte)0xF0, (byte)0x43, (byte)0x10, (byte)0x4C, (byte)0x00, (byte)0x00, (byte)0x7E, (byte)0x00, (byte)0xF7};
-    
-    private static final Color BACKGROUND_COLOR_GM = Color.ALICEBLUE;
-    private static final Color BACKGROUND_COLOR_GS = Color.DARKORANGE;
-    private static final Color BACKGROUND_COLOR_XG = Color.LAWNGREEN;
-    
     private final IntervalTimer intervalTimer = new IntervalTimer();
-    private final ColorChanger colorChanger;
+    private final ObjectProperty<Color> backgroundColor = new SimpleObjectProperty<>(MainModel.BACKGROUND_COLOR_GM);
     
     @Getter
     private List<Path> filelist = new ArrayList<>(3000);
-    @Getter @Setter
+    @Getter
     private int pos;
-    @Getter @Setter
-    private AppMode appMode = AppMode.STOPPED;
-    private MidiPlayerImpl midiPlayer;
-    private final MidiFileRepositoryImpl midiFilesRepository;
-    private final SoundFontRepositoryImpl soundFontRepository;
-    private final ObjectProperty<Background> backGroundProperty = new SimpleObjectProperty<>(new Background(new BackgroundFill(BACKGROUND_COLOR_GM, CornerRadii.EMPTY, Insets.EMPTY)));
+    private final StringProperty fileNameProperty = new SimpleStringProperty("");
+    private final StringProperty titleProperty = new SimpleStringProperty("");
+    private final ObjectProperty<AppMode> appModePropety = new SimpleObjectProperty<>(AppMode.STOPPED);
     private final ObjectProperty<Color> colorProperty = new SimpleObjectProperty<>();
-    private final BooleanProperty toggleButtonSelectedProperty = new SimpleBooleanProperty(false);
-    private final StringProperty fileNameProperty = new SimpleStringProperty();
-    private final StringProperty titleProperty = new SimpleStringProperty();
-    private final BooleanProperty prevButtonDisableProperty = new SimpleBooleanProperty(false);
-    private final BooleanProperty stopButtonDisableProperty = new SimpleBooleanProperty(true);
-    private final BooleanProperty playButtonDisableProperty = new SimpleBooleanProperty(false);
-    private final ObjectProperty<Image> playButtonImageProperty = new SimpleObjectProperty<>(IMAGE_PLAY_OFF);
-    private final BooleanProperty nextButtonDisableProperty = new SimpleBooleanProperty(false);
+    private final ObjectProperty<Background> backGroundProperty = new SimpleObjectProperty<>(new Background(new BackgroundFill(BACKGROUND_COLOR_GM, CornerRadii.EMPTY, Insets.EMPTY)));
     
-    //  再生ボタンとして表示するアイコンを取得する
-    private Image getPlayIcon(AppMode appMode)
-    {
-        return switch (appMode)
-        {
-            case AppMode.STOPPED -> IMAGE_PLAY_OFF;
-            case AppMode.PAUSED -> IMAGE_PAUSE_ON;
-            default -> IMAGE_PLAY_ON;
-        };
-    }
+    private final MidiPlayerImpl midiPlayer;
+    private final MidiFileRepository midiFilesRepository;
+    private final SoundFontRepository soundFontRepository;
     
     //  シーケンサーの初期化
     private void initSequencer(Soundbank soundbank)
@@ -88,7 +52,7 @@ public class MainModelImpl implements MainModel
                     case 0x03 -> 
                     {
                         String trackName = new String(data);
-                        this.titleProperty.set(trackName);
+                        setTitle(trackName);
                     }
                     case 0x2F -> 
                     {
@@ -111,30 +75,15 @@ public class MainModelImpl implements MainModel
                         
                         if (Arrays.equals(data, GM_RESET) || Arrays.equals(data, GM2_RESET)) 
                         {
-                            Platform.runLater(() -> 
-                            {
-                                colorChanger.setCurrentColor(getColor());
-                                colorChanger.setTargetColor(BACKGROUND_COLOR_GM);
-                                colorChanger.restart();
-                            });
+                            setBackgroundColor(MainModel.BACKGROUND_COLOR_GM);
                         }
                         else if (Arrays.equals(data, GS_RESET) || Arrays.equals(data, GS_SYSTEM_MODE1_SET) || Arrays.equals(data, GS_SYSTEM_MODE2_SET)) 
                         {
-                            Platform.runLater(() -> 
-                            {
-                                colorChanger.setCurrentColor(getColor());
-                                colorChanger.setTargetColor(BACKGROUND_COLOR_GS);
-                                colorChanger.restart();
-                            });
+                            setBackgroundColor(MainModel.BACKGROUND_COLOR_GS);
                         }
                         else if (Arrays.equals(data, XG_SYSTEM_ON)) 
                         {
-                            Platform.runLater(() -> 
-                            {
-                                colorChanger.setCurrentColor(getColor());
-                                colorChanger.setTargetColor(BACKGROUND_COLOR_XG);
-                                colorChanger.restart();
-                            });
+                            setBackgroundColor(MainModel.BACKGROUND_COLOR_XG);
                         }
                     }
                 }
@@ -148,18 +97,16 @@ public class MainModelImpl implements MainModel
         {
             e.printStackTrace();
         }
-        
     }
     
     /**
      *   コンストラクタ
-     *   @param mainController コントローラ
      */
-    public MainModelImpl(MainController mainController)
+    public MainModelImpl()
     {
         soundFontRepository = new SoundFontRepositoryImpl();
         midiFilesRepository = new MidiFileRepositoryImpl();
-        midiPlayer = new MidiPlayerImpl();        
+        midiPlayer = new MidiPlayerImpl();
         initSequencer(null);
         
         //  インターバルタイマーが終了したときの処理を登録する
@@ -174,22 +121,6 @@ public class MainModelImpl implements MainModel
                 next();
             }
         });
-        
-        this.colorProperty.set((Color)this.backGroundProperty.get().getFills().get(0).getFill());        
-        
-        colorChanger = new ColorChanger(this.colorProperty);
-        this.colorProperty().addListener((observable, oldValue, newValue) -> 
-        {
-            setBackground(new Background(new BackgroundFill(newValue, CornerRadii.EMPTY, Insets.EMPTY)));
-        });
-    }
-    
-    @Override
-    public void setButtonDisability()
-    {
-        setPrevButtonDisable(pos <= 0);
-        setNextButtonDisable(pos >= this.filelist.size() - 1);
-        setPlayButtonDisable(this.filelist.size() == 0);        
     }
     
     @Override
@@ -203,29 +134,23 @@ public class MainModelImpl implements MainModel
     {
         setAppMode(appMode);
         setFileName(file.getFileName().toString());
-        setStopButtonDisable(getAppMode().disableStopButton());
-        setPlayButtonImage(getPlayIcon(getAppMode()));
         switch (getAppMode())
         {
             case STOPPED ->
             {
-                setToggleButtonSelected(false);
                 this.midiPlayer.stop();
             }
             case PLAYING ->
             {
-                setToggleButtonSelected(true);
                 this.midiPlayer.stop();
                 this.midiPlayer.play(file);
             }
             case RESUMED ->
             {
-                setToggleButtonSelected(true);
                 this.midiPlayer.play(file);
             }
             case PAUSED ->
             {
-                setToggleButtonSelected(true);
                 this.midiPlayer.pause();
             }
             case INTERVAL ->
@@ -247,7 +172,9 @@ public class MainModelImpl implements MainModel
         if (!getFilelist().isEmpty())
         {
             //  .midファイルが存在する
-            applyAppMode(AppMode.PLAYING, getFilelist().get(getPos()));
+            Path newFile = getFilelist().get(getPos());
+            applyAppMode(AppMode.PLAYING, newFile);
+            setFileName(newFile.getFileName().toString());
         }
         else
         {
@@ -255,9 +182,6 @@ public class MainModelImpl implements MainModel
             //  何もしない
             applyAppMode(AppMode.STOPPED, null);
         }
-
-        //  「戻る」「進む」ボタンの非表示を設定する
-        setButtonDisability();
     }
     
     @Override
@@ -266,7 +190,6 @@ public class MainModelImpl implements MainModel
         pos--;
         setTitle("");
         this.intervalTimer.cancel();
-        setButtonDisability();
         
         switch (getAppMode())
         {
@@ -297,10 +220,9 @@ public class MainModelImpl implements MainModel
     @Override
     public void next()
     {
-        pos++;        
+        setPos(pos + 1);
         setTitle("");
         this.intervalTimer.cancel();
-        setButtonDisability();        
         switch (getAppMode())
         {
             case AppMode.RESUMED -> 
@@ -362,6 +284,50 @@ public class MainModelImpl implements MainModel
         applyAppMode(getAppMode(), filelist.get(pos));
     }
     
+    private void setPos(int pos)
+    {
+        this.pos = pos;
+    }
+    
+    public String getFileName()
+    {
+        return this.fileNameProperty.get();
+    }
+    private void setFileName(String fileName)
+    {
+        this.fileNameProperty.set(fileName);
+    }
+    public StringProperty fileNameProperty()
+    {
+        return this.fileNameProperty;
+    }    
+    
+    public String getTitle()
+    {
+        return this.titleProperty.get();
+    }
+    private void setTitle(String title)
+    {
+        this.titleProperty.set(title);
+    }
+    public StringProperty titleProperty()
+    {
+        return this.titleProperty;
+    }    
+    
+    public AppMode getAppMode()
+    {
+        return this.appModePropety.get();
+    }
+    private void setAppMode(AppMode appMode)
+    {
+        this.appModePropety.set(appMode);
+    }
+    public ObjectProperty<AppMode> appModeProperty()
+    {
+        return this.appModePropety;
+    }
+    
     @Override
     public void loadSoundFont(Path path)
     {
@@ -394,107 +360,18 @@ public class MainModelImpl implements MainModel
         return this.colorProperty;
     }
     
-    public boolean getToggleButtonSelected()
+    @Override
+    public Color getBackgroundColor()
     {
-        return this.toggleButtonSelectedProperty.get();
-    }    
-    public void setToggleButtonSelected(boolean selected)
-    {
-        this.toggleButtonSelectedProperty.set(selected);
-    }    
-    public BooleanProperty toggleButtonSelectedProperty()            
-    {
-        return this.toggleButtonSelectedProperty;
+        return this.backgroundColor.get();
     }
-    
-    public String getFileName()
+    private void setBackgroundColor(Color backgroundColor)
     {
-        return this.fileNameProperty.get();
+        this.backgroundColor.set(backgroundColor);
     }
-    public void setFileName(String fileName)
+    @Override
+    public ObjectProperty<Color> backgroundColorProperty()
     {
-        this.fileNameProperty.set(fileName);
-    }
-    public StringProperty fileNameProperty()            
-    {
-        return this.fileNameProperty;
-    }
-    
-    public String getTitle()
-    {
-        return this.titleProperty.get();
-    }
-    public void setTitle(String title)
-    {
-        this.titleProperty.set(title);
-    }
-    public StringProperty titleProperty()
-    {
-        return this.titleProperty;
-    }
-    
-    public boolean getPrevButtonDisable()
-    {
-        return this.prevButtonDisableProperty.get();
-    }
-    public void setPrevButtonDisable(boolean disable)
-    {
-        this.prevButtonDisableProperty.set(disable);
-    }
-    public BooleanProperty prevButtonDisableProperty()
-    {
-        return this.prevButtonDisableProperty;
-    }
-    
-    public boolean getStopButtonDisable()
-    {
-        return this.stopButtonDisableProperty.get();
-    }
-    public void setStopButtonDisable(boolean disable)
-    {
-        this.stopButtonDisableProperty.set(disable);
-    }
-    public BooleanProperty stopButtonDisableProperty()
-    {
-        return this.stopButtonDisableProperty;
-    }
-    
-    public boolean getPlayButtonDisable()
-    {
-        return this.playButtonDisableProperty.get();
-    }
-    public void setPlayButtonDisable(boolean disable)
-    {
-        this.playButtonDisableProperty.set(disable);
-    }
-    public BooleanProperty playButtonDisableProperty()
-    {
-        return this.playButtonDisableProperty;
-    }    
-    
-    public Image getPlayButtonImage()
-    {
-        return this.playButtonImageProperty.get();
-    }
-    public void setPlayButtonImage(Image image)
-    {
-        this.playButtonImageProperty.set(image);
-    }
-    public ObjectProperty<Image> playButtonImageProperty()
-    {
-        return this.playButtonImageProperty;
-    }
-    
-    public boolean getNextButtonDisable()
-    {
-        return this.nextButtonDisableProperty.get();
-    }
-    public void setNextButtonDisable(boolean disable)
-    {
-        this.nextButtonDisableProperty.set(disable);
-    }
-    public BooleanProperty nextButtonDisableProperty()
-    {
-        return this.nextButtonDisableProperty;
+        return this.backgroundColor;
     }
 }

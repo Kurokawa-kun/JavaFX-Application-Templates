@@ -1,9 +1,6 @@
 package io.github.kurokawa_kun.javafx.templates.services;
-import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Arrays;
 import javax.sound.midi.*;
-import lombok.*;
 
 //  MIDIプレイヤー
 public interface MidiPlayer
@@ -21,7 +18,7 @@ public interface MidiPlayer
     
     /**
      *   指定されたMIDIファイルを再生する
-     *   @param MIDIファイルのパス
+     *   @param midiFile MIDIファイルのパス
      */
     public void play(Path midiFile);
     

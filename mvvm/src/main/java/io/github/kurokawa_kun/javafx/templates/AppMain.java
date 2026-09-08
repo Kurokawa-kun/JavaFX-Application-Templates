@@ -1,5 +1,5 @@
 package io.github.kurokawa_kun.javafx.templates;
-import io.github.kurokawa_kun.javafx.templates.services.InitializationManagerImpl;
+import io.github.kurokawa_kun.javafx.templates.services.*;
 import io.github.kurokawa_kun.javafx.templates.controllers.*;
 import io.github.kurokawa_kun.javafx.templates.viewmodels.*;
 import javafx.application.*;
@@ -21,7 +21,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class AppMain extends Application 
 {
     private ConfigurableApplicationContext springContext;
-    private InitializationManagerImpl initializationManager;
+    private InitializationManager initializationManager;
     private SplashController splashController;
     private SplashViewModel splashViewModel;
     private MainController mainController;

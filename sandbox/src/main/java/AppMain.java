@@ -106,6 +106,7 @@ public class AppMain extends Application
     
     /**
      *   メインメソッド  
+     *   @param args コマンドライン引数
      */
     public static void main(String[] args) 
     {

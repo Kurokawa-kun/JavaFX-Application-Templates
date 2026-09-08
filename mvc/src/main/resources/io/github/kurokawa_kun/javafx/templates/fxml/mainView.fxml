@@ -45,14 +45,14 @@
    <bottom>
       <HBox alignment="CENTER" minHeight="60.0" minWidth="-Infinity" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="buttonPrev" mnemonicParsing="false" onAction="#buttonPrevOnAction">
+            <Button fx:id="buttonPrev" disable="true" mnemonicParsing="false" onAction="#buttonPrevOnAction">
                <graphic>
                   <ImageView pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@icons/prev.png" />
                      </image></ImageView>
                </graphic></Button>
-            <Button fx:id="buttonStop" mnemonicParsing="false" onAction="#buttonStopOnAction">
+            <Button fx:id="buttonStop" disable="true" mnemonicParsing="false" onAction="#buttonStopOnAction">
                <graphic>
                   <ImageView pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -61,7 +61,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <ToggleButton fx:id="toggleButtonPlay" mnemonicParsing="false" onAction="#toggleButtonPlayOnAction">
+            <ToggleButton fx:id="toggleButtonPlay" disable="true" mnemonicParsing="false" onAction="#toggleButtonPlayOnAction">
                <graphic>
                   <ImageView fx:id="imageViewPlay" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -69,7 +69,7 @@
                      </image>
                   </ImageView>
                </graphic></ToggleButton>
-            <Button fx:id="buttonNext" mnemonicParsing="false" onAction="#buttonNextOnAction">
+            <Button fx:id="buttonNext" disable="true" mnemonicParsing="false" onAction="#buttonNextOnAction">
                <graphic>
                   <ImageView pickOnBounds="true" preserveRatio="true">
                      <image>

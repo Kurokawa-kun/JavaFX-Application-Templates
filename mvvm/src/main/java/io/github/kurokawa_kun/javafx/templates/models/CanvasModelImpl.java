@@ -7,7 +7,7 @@ import lombok.*;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CanvasModelImpl
+public class CanvasModelImpl implements CanvasModel
 {
     @Getter @Setter
     private ImageData imageData;
@@ -25,6 +25,7 @@ public class CanvasModelImpl
         this.htmlColorService = htmlColorService;
     }
     
+    @Override
     public ImageData load(Path filePath)
     {
         ImageData newImageData = this.imageDataRepository.load(filePath);
@@ -32,11 +33,13 @@ public class CanvasModelImpl
         return newImageData;
     }
         
+    @Override
     public void updateImage(ImageData imageData)
     {
         this.setImageData(imageData);
     }
     
+    @Override
     public ImageData callMonochromeService()
     {
         ImageData newImageData = monochromeService.applyEffect(this.imageData);
@@ -44,6 +47,7 @@ public class CanvasModelImpl
         return newImageData;
     }
     
+    @Override
     public ImageData callHtmlColorService()
     {
         ImageData newImageData = htmlColorService.applyEffect(this.imageData);

@@ -1,7 +1,6 @@
 package io.github.kurokawa_kun.javafx.templates.services;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Arrays;
 import javax.sound.midi.*;
 import lombok.*;
 
@@ -88,11 +87,7 @@ public class MidiPlayerImpl implements MidiPlayer
             }
             sequencer.start();
         }
-        catch (InvalidMidiDataException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
+        catch (InvalidMidiDataException | IOException e)
         {
             e.printStackTrace();
         }

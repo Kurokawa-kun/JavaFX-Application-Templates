@@ -49,7 +49,7 @@ public class AppMain extends Application
     /**
      *   アプリ起動時に呼び出されるメソッド
      *   JavaFXのApplication終了時に呼び出されるメソッド
-     *   @param 表示されるステージ
+     *   @param stage 表示されるステージ
      */    
     @Override
     public void start(Stage stage)
@@ -124,7 +124,8 @@ public class AppMain extends Application
     }
     
     /**
-     *   メインメソッド  
+     *   メインメソッド
+     *   @param args コマンドライン引数
      */
     public static void main(String[] args) 
     {

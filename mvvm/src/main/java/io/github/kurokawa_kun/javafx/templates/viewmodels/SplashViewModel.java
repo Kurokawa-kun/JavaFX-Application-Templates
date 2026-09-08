@@ -1,5 +1,5 @@
 package io.github.kurokawa_kun.javafx.templates.viewmodels;
-import io.github.kurokawa_kun.javafx.templates.services.InitializationManagerImpl;
+import io.github.kurokawa_kun.javafx.templates.services.*;
 import javafx.beans.property.*;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SplashViewModel
 {
-    private final InitializationManagerImpl initializationManager;
+    private final InitializationManager initializationManager;
     private final StringProperty currentMessage = new SimpleStringProperty(this, "");
     private final DoubleProperty currentProgress = new SimpleDoubleProperty(this, "");
     
@@ -17,7 +17,7 @@ public class SplashViewModel
      *   コンストラクタ
      *   @param initializationManager InitializationManagerのインスタンス
      */
-    public SplashViewModel(InitializationManagerImpl initializationManager)
+    public SplashViewModel(InitializationManager initializationManager)
     {
         this.initializationManager = initializationManager;
     }

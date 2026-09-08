@@ -1,6 +1,6 @@
 package io.github.kurokawa_kun.javafx.templates.viewmodels;
 import io.github.kurokawa_kun.javafx.templates.entities.ImageData;
-import io.github.kurokawa_kun.javafx.templates.models.CanvasModelImpl;
+import io.github.kurokawa_kun.javafx.templates.models.*;
 import io.github.kurokawa_kun.javafx.templates.services.*;
 import io.github.kurokawa_kun.javafx.templates.utils.ImageTranslator;
 import java.nio.IntBuffer;
@@ -23,7 +23,7 @@ public class MainViewModel
     private final StringProperty labelZoomRatioProperty = new SimpleStringProperty();
     private final BooleanProperty sliderDisableProperty = new SimpleBooleanProperty(true);
     private final ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
-    private final CanvasModelImpl canvasModel;
+    private final CanvasModel canvasModel;
     
     /**
      *   コンストラクタ
@@ -31,7 +31,7 @@ public class MainViewModel
      *   @param monochromeService MonochromeServiceのインスタンス
      *   @param htmlColorService HtmlColorServiceのインスタンス
      */
-    public MainViewModel(CanvasModelImpl canvasModel, MonochromeService monochromeService, HtmlColorLoader htmlColorService)
+    public MainViewModel(CanvasModel canvasModel, MonochromeService monochromeService, HtmlColorLoader htmlColorService)
     {
         this.canvasModel = canvasModel;
         this.sliderValueProperty.addListener((observable, oldValue, newValue) -> 
